@@ -2,7 +2,7 @@
 // @name         scum8_teleport_pro
 // @name:zh-CN   scum8商城传送页面增强
 // @namespace    https://github.com/playboytzy/scum8_teleport_pro/
-// @version      1.7
+// @version      1.8
 // @description  为scum8商城传送界面添加可拖动与可滑动功能，缩小传送按钮，传送按钮可移动
 // @author       Meow-小猫
 // @match        https://*.scum8.com/chuansong.html
@@ -10,8 +10,6 @@
 // @grant        GM_getValue
 // @grant        GM_addStyle
 // @run-at       document-end
-// @downloadURL https://update.greasyfork.org/scripts/548551/scum8_teleport_pro.user.js
-// @updateURL https://update.greasyfork.org/scripts/548551/scum8_teleport_pro.meta.js
 // ==/UserScript==
 
 (function() {
@@ -334,7 +332,16 @@ function addSlideFeature(sidebar) {
         childList: true,
         subtree: true
     });
-
+    // 查找所有包含指定类的元素
+    const elements = document.querySelectorAll('.fixed.bottom-0.w-full.bg-base-200.bg-opacity-80.text-center.py-1.shadow-md');
+    const elements1 = document.querySelectorAll('.fixed.bottom-4.right-4.z-50');
+    // 移除这些元素
+    elements.forEach(element => {
+        element.remove();
+    });
+    elements1.forEach(element => {
+        element.remove();
+    });
     // 初始处理已存在的元素
     document.querySelectorAll('li.chuansong-location').forEach(processLocationItem);
     // 初始执行
