@@ -2,9 +2,9 @@
 // @name         S141传送界面增强
 // @namespace    https://github.com/playboytzy/S141_teleport_pro/
 // @version      1.4
-// @description  为S141传送界面添加可拖动与可滑动功能，缩小传送按钮
+// @description  为scum8商城传送界面添加可拖动与可滑动功能，缩小传送按钮
 // @author       Meow-小猫
-// @match        https://141.scum8.com/chuansong.html
+// @match        https://*.scum8.com/chuansong.html
 // @grant        GM_setValue
 // @grant        GM_getValue
 // @grant        GM_addStyle
