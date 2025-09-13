@@ -3,4 +3,4 @@
 
 点击安装
 
-greasyfork：https://greasyfork.org/zh-CN/scripts/548551-s141%E4%BC%A0%E9%80%81%E7%95%8C%E9%9D%A2%E5%A2%9E%E5%BC%BA
+[greasyfork](https://greasyfork.org/zh-CN/scripts/548551-scum8-teleport-pro)
