@@ -238,6 +238,132 @@ function addSlideFeature(sidebar) {
 //         childList: true,
 //         subtree: true
 //     });
+    // 样式定义
+    const style = document.createElement('style');
+    style.textContent = `
+        li.chuansong-location {
+//             min-width: 120px;
+            max-width: 300px;
+            width: auto;
+            padding: 0px 0px;
+            transition: all 0.3s ease;
+            position: relative;
+            cursor: move;
+        }
+
+        li.chuansong-location .delete-btn {
+            position: absolute;
+            right: -8px;
+            top: -8px;
+            cursor: pointer;
+            background-color: red;
+            color: white;
+            border-radius: 50%;
+            width: 12px;
+            height: 12px;
+            text-align: center;
+            line-height: 12px;
+            font-size: 12px;
+            z-index: 1001;
+        }
+
+        @media (max-width: 768px) {
+            li.chuansong-location {
+                min-width: 100px;
+                max-width: 200px;
+                padding: 8px 16px;
+            }
+        }
+    `;
+    document.head.appendChild(style);
+
+    // 初始化MutationObserver
+    const observer2 = new MutationObserver(function(mutations) {
+        mutations.forEach(function(mutation) {
+            mutation.addedNodes.forEach(function(node) {
+                if (node.nodeType === 1 && node.matches('li.chuansong-location')) {
+                    processLocationItem(node);
+                }
+
+                if (node.querySelectorAll) {
+                    node.querySelectorAll('li.chuansong-location').forEach(processLocationItem);
+                }
+            });
+        });
+    });
+
+    // 处理单个传送点元素
+    function processLocationItem(item) {
+        if (item.dataset.processed) return;
+        item.dataset.processed = 'true';
+
+        makeDraggable2(item);
+        addDeleteButton(item);
+        applyButtonStyle(item);
+    }
+
+    // 应用按钮样式
+    function applyButtonStyle(element) {
+        element.classList.add('chuansong-location');
+    }
+
+    // 使元素可拖动
+    function makeDraggable2(element) {
+        let pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+
+        element.onmousedown = dragMouseDown;
+
+        function dragMouseDown(e) {
+            e.preventDefault();
+            pos3 = e.clientX;
+            pos4 = e.clientY;
+            document.onmouseup = closeDragElement;
+            document.onmousemove = elementDrag;
+        }
+
+        function elementDrag(e) {
+            e.preventDefault();
+            pos1 = pos3 - e.clientX;
+            pos2 = pos4 - e.clientY;
+            pos3 = e.clientX;
+            pos4 = e.clientY;
+
+            element.style.top = (element.offsetTop - pos2) + "px";
+            element.style.left = (element.offsetLeft - pos1) + "px";
+            element.style.position = "absolute";
+            element.style.zIndex = "1000";
+        }
+
+        function closeDragElement() {
+            document.onmouseup = null;
+            document.onmousemove = null;
+        }
+    }
+
+    // 添加删除按钮
+    function addDeleteButton(element) {
+        let deleteBtn = document.createElement('span');
+        deleteBtn.className = 'delete-btn';
+        deleteBtn.innerHTML = '×';
+
+        deleteBtn.onclick = function(e) {
+            e.stopPropagation();
+            if(confirm('确定要删除这个传送点吗？')) {
+                element.remove();
+            }
+        };
+
+        element.appendChild(deleteBtn);
+    }
+
+    // 开始观察DOM变化
+    observer2.observe(document.body, {
+        childList: true,
+        subtree: true
+    });
+
+    // 初始处理已存在的元素
+    document.querySelectorAll('li.chuansong-location').forEach(processLocationItem);
     // 初始执行
     window.addEventListener('load', applyStyles);
     // 延迟执行以确保DOM完全加载
