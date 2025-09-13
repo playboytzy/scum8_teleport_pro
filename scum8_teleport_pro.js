@@ -31,8 +31,8 @@
 // @name:da      scum8_teleport_pro
 // @name:fr-CA   scum8_teleport_pro
 // @namespace    https://github.com/playboytzy/scum8_teleport_pro/
-// @version      1.4
-// @description  为scum8商城传送界面添加可拖动与可滑动功能，缩小传送按钮
+// @version      1.5
+// @description  为scum8商城传送界面添加可拖动与可滑动功能，缩小传送按钮，传送按钮可移动
 // @author       Meow-小猫
 // @match        https://*.scum8.com/chuansong.html
 // @grant        GM_setValue
