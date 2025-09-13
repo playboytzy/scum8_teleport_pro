@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name         scum8商城传送界面增强
+// @name         scum8_teleport_pro
 // @namespace    https://github.com/playboytzy/scum8_teleport_pro/
 // @version      1.4
 // @description  为scum8商城传送界面添加可拖动与可滑动功能，缩小传送按钮
