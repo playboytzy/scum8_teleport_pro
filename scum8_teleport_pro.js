@@ -1,8 +1,8 @@
 // ==UserScript==
 // @name         scum8_teleport_pro
-// @name:zh-CN   scum8商城传送页面增强
+// @name:zh-CN   scum8商城传送页面增强-本地
 // @namespace    https://github.com/playboytzy/scum8_teleport_pro/
-// @version      1.81
+// @version      1.9
 // @description  为scum8商城传送界面添加可拖动与可滑动功能，缩小传送按钮，传送按钮可移动
 // @author       Meow-小猫
 // @match        https://*.scum8.com/chuansong.html*
@@ -343,11 +343,37 @@ function addSlideFeature(sidebar) {
     elements1.forEach(element => {
         element.remove();
     });
+    //删除猫币span
+        function removeCatCoins() {
+        const locations = document.querySelectorAll('.chuansong-location');
+
+        locations.forEach(location => {
+            const catCoinSpan = location.querySelector('span[data-v-0f16a510]');
+            if (catCoinSpan) {
+                catCoinSpan.remove();
+            }
+        });
+    }
+
+    // 初始检测
+    removeCatCoins();
+
+    // 动态检测配置
+    const observerConfig = {
+        childList: true,       // 监听子节点变化
+        subtree: true,         // 监听所有后代节点
+        attributes: true       // 监听属性变化
+    };
+
+    // 创建观察者
+    const observer3 = new MutationObserver(removeCatCoins);
+
+    // 开始观察document.body
+    observer3.observe(document.body, observerConfig);
     // 初始处理已存在的元素
     document.querySelectorAll('li.chuansong-location').forEach(processLocationItem);
     // 初始执行
     window.addEventListener('load', applyStyles);
     // 延迟执行以确保DOM完全加载
     setTimeout(initSidebarSlider, 500);
-
 })();
