@@ -2,7 +2,7 @@
 // @name         scum8_teleport_pro
 // @name:zh-CN   scum8商城传送页面增强
 // @namespace    https://github.com/playboytzy/scum8_teleport_pro/
-// @version      1.9
+// @version      1.91
 // @description  为scum8商城传送界面添加可拖动与可滑动功能，缩小传送按钮，传送按钮可移动
 // @author       Meow-小猫
 // @match        https://*.scum8.com/chuansong.html*
@@ -184,32 +184,7 @@ function addSlideFeature(sidebar) {
         subtree: true,
         childList: true
     });
-    //隐藏1000猫币
-//     // 配置需要删除的span所属的class名称
-//     const TARGET_CLASS = '""';
-
-//     function removeSpans() {
-//         const spans = document.querySelectorAll(`span.${TARGET_CLASS}`);
-//         spans.forEach(span => {
-//             span.remove();
-//             console.log(`已删除class为${TARGET_CLASS}的span元素`);
-//         });
-//     }
-
-//     // 页面加载完成后执行
-//     window.addEventListener('load', function() {
-//         removeSpans();
-//     });
-
-//     // 监听DOM变化（针对动态加载内容）
-//     const observer3 = new MutationObserver(function(mutations) {
-//         removeSpans();
-//     });
-
-//     observer3.observe(document.body, {
-//         childList: true,
-//         subtree: true
-//     });
+    //传送点可拖动
     // 样式定义
     const style = document.createElement('style');
     style.textContent = `
@@ -358,17 +333,15 @@ function addSlideFeature(sidebar) {
     // 初始检测
     removeCatCoins();
 
-    // 动态检测配置
+    // 动态监测配置
     const observerConfig = {
         childList: true,       // 监听子节点变化
         subtree: true,         // 监听所有后代节点
         attributes: true       // 监听属性变化
     };
-
-    // 创建观察者
+    // 创建删除猫币span监测
     const observer3 = new MutationObserver(removeCatCoins);
-
-    // 开始观察document.body
+    // 开始监测document.body
     observer3.observe(document.body, observerConfig);
     // 初始处理已存在的元素
     document.querySelectorAll('li.chuansong-location').forEach(processLocationItem);
