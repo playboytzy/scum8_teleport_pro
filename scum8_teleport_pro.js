@@ -2,7 +2,7 @@
 // @name         scum8_teleport_pro
 // @name:zh-CN   scum8商城传送页面增强
 // @namespace    https://github.com/playboytzy/scum8_teleport_pro/
-// @version      1.91
+// @version      1.92
 // @description  为scum8商城传送界面添加可拖动与可滑动功能，缩小传送按钮，传送按钮可移动
 // @author       Meow-小猫
 // @match        https://*.scum8.com/chuansong.html*
@@ -258,7 +258,12 @@ function addSlideFeature(sidebar) {
     function makeDraggable2(element) {
         let pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
 
-        element.onmousedown = dragMouseDown;
+//         element.onmousedown = dragMouseDown;
+        // 仅响应中键按下（button值为1）
+        element.onmousedown = function(e) {
+            if (e.button !== 1) return; // 非中键立即返回
+            dragMouseDown(e);
+        };
 
         function dragMouseDown(e) {
             e.preventDefault();
