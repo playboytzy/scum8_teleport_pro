@@ -2,7 +2,7 @@
 // @name         scum8_teleport_pro_v2
 // @name:zh-CN   scum8商城传送页面增强
 // @namespace    https://github.com/playboytzy/scum8_teleport_pro/
-// @version      2.0
+// @version      2.01
 // @description  为scum8商城传送界面添加传送按钮可移动、删除
 // @author       Meow-小猫
 // @match        https://*.scum8.com/chuansong.html*
@@ -106,7 +106,7 @@ function selectMarker(marker) {
     marker.classList.add('marker-highlight');
 
     // 显示操作提示（3秒后消失）
-    showQuickTip('已选择标记：拖拽移动 | 点击×按钮删除');
+    showQuickTip('已选择传送点：拖拽移动 | 点击×按钮删除');
 }
 
 function enableDrag(element) {
@@ -140,7 +140,7 @@ function enableDrag(element) {
 
 
 function deleteMarker(marker) {
-    if (confirm('确定要删除这个地图标记吗？\n\n删除操作无法撤销！')) {
+    if (confirm('确定要删除这个传送点吗？\n\n删除操作刷新后重置！')) {
         marker.classList.add('marker-delete-animation');
         setTimeout(() => {
             marker.remove();
@@ -216,6 +216,7 @@ if (document.readyState === 'loading') {
 } else {
     setTimeout(initializeSimplifiedControls, 2000);
 }
+    // 删除下边栏
     // 查找所有包含指定类的元素
     const elements = document.querySelectorAll('.fixed.bottom-0.w-full.bg-base-200.bg-opacity-80.text-center.py-1.shadow-md');
     const elements1 = document.querySelectorAll('.fixed.bottom-4.right-4.z-50');
