@@ -2,7 +2,7 @@
 // @name         scum8_teleport_pro_v2
 // @name:zh-CN   scum8商城传送页面增强
 // @namespace    https://github.com/playboytzy/scum8_teleport_pro/
-// @version      2.01
+// @version      2.02
 // @description  为scum8商城传送界面添加传送按钮可移动、删除
 // @author       Meow-小猫
 // @match        https://*.scum8.com/chuansong.html*
@@ -216,6 +216,111 @@ if (document.readyState === 'loading') {
 } else {
     setTimeout(initializeSimplifiedControls, 2000);
 }
+    // 禁用右键菜单的主要功能
+    function disableContextMenu() {
+        // 阻止右键菜单弹出
+        document.addEventListener('contextmenu', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            return false;
+        }, true);
+
+        // 阻止键盘快捷键F10和Shift+F10（在某些浏览器中会触发右键菜单）
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'F10' || (e.shiftKey && e.key === 'F10')) {
+                e.preventDefault();
+                e.stopPropagation();
+                return false;
+            }
+        }, true);
+
+        // 阻止通过JavaScript代码触发的右键菜单
+        document.addEventListener('DOMContentLoaded', function() {
+            // 重新定义可能被页面脚本使用的相关属性
+            if (document.oncontextmenu !== null) {
+                document.oncontextmenu = function() {
+                    return false;
+                };
+            }
+
+            // 阻止通过element.oncontextmenu属性设置的右键菜单
+            const elements = document.querySelectorAll('*');
+            elements.forEach(element => {
+                if (element.oncontextmenu) {
+                    element.oncontextmenu = function() {
+                        return false;
+                    };
+                }
+            });
+        });
+
+        // 为动态添加的元素也禁用右键菜单
+        const observer = new MutationObserver(function(mutations) {
+            mutations.forEach(function(mutation) {
+                if (mutation.addedNodes.length > 0) {
+                    mutation.addedNodes.forEach(function(node) {
+                        if (node.nodeType === 1) { // 元素节点
+                            if (node.oncontextmenu) {
+                                node.oncontextmenu = function() {
+                                    return false;
+                                };
+                            }
+                        }
+                    });
+                }
+            });
+        });
+
+        observer.observe(document.body, {
+            childList: true,
+            subtree: true
+        });
+
+        console.log('右键菜单禁用脚本已启用');
+    }
+
+    // 执行禁用功能
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', disableContextMenu);
+    } else {
+        disableContextMenu();
+    }
+
+//     // 添加样式提示用户右键已被禁用
+//     const style = document.createElement('style');
+//     style.textContent = `
+//         body::after {
+//             content: "右键功能已被禁用";
+//             position: fixed;
+//             bottom: 10px;
+//             right: 10px;
+//             background: rgba(255, 59, 48, 0.9);
+//             color: white;
+//             padding: 5px 10px;
+//             border-radius: 4px;
+//             font-size: 12px;
+//             z-index: 10000;
+//             opacity: 0;
+//             transition: opacity 0.3s;
+//             pointer-events: none;
+//         }
+
+//         body.context-menu-disabled::after {
+//             opacity: 1;
+//         }
+//     `;
+//     document.head.appendChild(style);
+
+//     // 添加右键被阻止时的视觉反馈
+//     document.addEventListener('mousedown', function(e) {
+//         if (e.button === 2) { // 右键
+//             document.body.classList.add('context-menu-disabled');
+//             setTimeout(function() {
+//                 document.body.classList.remove('context-menu-disabled');
+//             }, 2000);
+//         }
+//     });
+
     // 删除下边栏
     // 查找所有包含指定类的元素
     const elements = document.querySelectorAll('.fixed.bottom-0.w-full.bg-base-200.bg-opacity-80.text-center.py-1.shadow-md');
